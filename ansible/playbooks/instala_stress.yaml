@@ -1,6 +1,13 @@
-- hosts: all
+- name: Install stress-ng
+  hosts: all
+  become: yes
   tasks:
-  - name: Instala stress-ng
-    yum:
-      name: stress-ng
-      state: present
+    - name: Ensure EPEL repository is enabled
+      ansible.builtin.yum:
+        name: epel-release
+        state: present
+
+    - name: Install stress-ng
+      ansible.builtin.yum:
+        name: stress-ng
+        state: present
