@@ -1,0 +1,30 @@
+---
+- name: Gerar inventory.ini com IPs das VMs usando k8s_info
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Obter lista de VirtualMachineInstances (VMIs)
+      kubernetes.core.k8s_info:
+        api_version: kubevirt.io/v1
+        kind: VirtualMachineInstance
+        namespace: teste1
+      register: vmi_info
+
+ #   - debug: var=vmi_info
+
+    - name: 
+      set_fact:
+       ip: "{{ ip | default([]) + [item.interfaces[0].ipAddress | default('')] }}"
+      with_items: "{{ vmi_info.resources | map(attribute='status') | list  }}"
+
+    - name: Criar conteúdo do inventory.ini
+      copy:
+        dest: ./inventario.ini
+        content: |
+          [vms]
+          {% for vm in ip %}
+          {{ vm }} ansible_host={{ vm }}
+          {% endfor %}
+          [all:vars]
+          ansible_ssh_private_key_file=./files/id_resa
+          ansible_user=centos

@@ -1,0 +1,44 @@
+- name: Cria VMs em lote no OpenShift Virtualization
+  hosts: localhost
+  vars:
+    numero_de_vms: 3
+    namespace: teste1
+    vm_password: abacaxi
+  tasks:
+  - name: Cria Namespace para Teste
+    kubernetes.core.k8s:
+     name: "{{ namespace }}"
+     api_version: v1
+     kind: Namespace
+     state: present
+
+  - name: Le o conteúdo do arquivo de chave pública
+    slurp:
+      src: files/id_rsa.pub
+    register: chave_publica_raw
+
+  - name: Converter o conteúdo para Base64
+    set_fact:
+      chave_publica_base64: "{{ chave_publica_raw.content }}"
+      password: lookup('password', '/dev/null length=12')
+
+  - name: Cria a secret com a chave publica
+    kubernetes.core.k8s:
+     state: present
+     template: 'secret-ssh.yaml.j2'
+
+  - name: Exibir o conteúdo da chave pública em Base64
+    debug:
+      msg: "{{ chave_publica_raw.content }}"
+
+  - name: Gerar matriz de nomes de VMs
+    set_fact:
+      vm_name: "{{ vm_name | default([]) + ['vm-teste-' ~ item] }}"
+      mac_address: "{{ mac_address | default([]) + ['52:54:00' | community.general.random_mac] }}"
+    with_sequence: start=0 end={{ numero_de_vms - 1}}
+
+  - name: Cria vms de acordo com o numero  
+    kubernetes.core.k8s:
+     state: present
+     template: 'vm-template.yaml.j2'
+    with_sequence: start=0 end={{ numero_de_vms -1 }}
