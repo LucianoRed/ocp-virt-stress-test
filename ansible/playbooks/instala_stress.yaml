@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+  - name: Instala stress-ng
+    yum:
+      name: stress-ng
+      state: present
