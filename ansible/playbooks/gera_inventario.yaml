@@ -7,7 +7,7 @@
       kubernetes.core.k8s_info:
         api_version: kubevirt.io/v1
         kind: VirtualMachineInstance
-        namespace: teste1
+        namespace: "{{ namespace }}"
       register: vmi_info
 
  #   - debug: var=vmi_info
