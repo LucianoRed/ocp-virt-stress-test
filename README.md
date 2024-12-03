@@ -51,6 +51,13 @@ ansible-playbook -i inventario.ini -e "namespace=abc123" stress_cpu.yaml
 ansible-playbook -i inventario.ini -e "namespace=abc123" stress_memoria.yaml
 ```
 
+### (Opcional) Criar sua propria chave ssh
+De dentro do diretorio /ansible/playbooks gere o seguinte comando
+
+```
+ssh-keygen -t rsa -b 4096 -f /ansible/playbooks/files/id_rsa
+```
+
 
 ### Destruir VMs
 ```
