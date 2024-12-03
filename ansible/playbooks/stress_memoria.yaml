@@ -1,0 +1,12 @@
+- name: Stress memory using stress
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install stress
+      ansible.builtin.yum:
+        name: stress
+        state: present
+
+    - name: Run memory stress test
+      ansible.builtin.command:
+        cmd: "stress --vm 2 --vm-bytes 1G --timeout 30s"

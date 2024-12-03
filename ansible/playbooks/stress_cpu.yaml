@@ -1,0 +1,12 @@
+- name: Stress CPU using stress
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install stress
+      ansible.builtin.yum:
+        name: stress
+        state: present
+
+    - name: Run CPU stress test
+      ansible.builtin.command:
+        cmd: "stress --cpu 4 --timeout 30s"

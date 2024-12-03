@@ -4,9 +4,11 @@ ENV K8S_AUTH_API_KEY=x
 ENV K8S_AUTH_HOST=y
 ENV K8S_AUTH_VERIFY_SSL=false
 ENV HOME=/ansible
+ENV ANSIBLE_HOST_KEY_CHECKING=False
 RUN yum install -y httpd php iputils && mkdir /ansible && chmod -R 777 /ansible && sed -i 's/^Listen 80$/Listen 8080/' /etc/httpd/conf/httpd.conf && chmod -R 777 /var/run && chmod -R 777 /etc/httpd/logs/ && yum clean all && rm -rf /var/run/cache
 ADD playbooks /ansible
 RUN chmod -R 777 /ansible
 USER 12345
 EXPOSE 8080
+WORKDIR /ansible
 CMD ["httpd", "-D", "FOREGROUND"]

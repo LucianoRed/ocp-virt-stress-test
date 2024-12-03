@@ -1,13 +1,23 @@
-- name: Install stress-ng
+- name: Add EPEL GPG key
   hosts: all
   become: yes
   tasks:
-    - name: Ensure EPEL repository is enabled
+    - name: Import EPEL GPG key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
+
+    - name: Download EPEL release RPM
+      ansible.builtin.get_url:
+        url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+        dest: "/tmp/epel-release-latest-9.noarch.rpm"
+
+    - name: Install EPEL release RPM
       ansible.builtin.yum:
-        name: epel-release
+        name: /tmp/epel-release-latest-9.noarch.rpm
         state: present
 
     - name: Install stress-ng
       ansible.builtin.yum:
-        name: stress-ng
+        name: stress
         state: present
