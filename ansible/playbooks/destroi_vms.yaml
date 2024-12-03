@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     numero_de_vms: 3
-    namespace: teste1
+    namespace: algumas-vms-para-estressar
     vm_password: abacaxi
   tasks:
   - name: Cria Namespace para Teste

@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     numero_de_vms: 3
-    namespace: teste1
+    namespace: algumas-vms-para-estressar
     vm_password: abacaxi
   tasks:
   - name: Cria Namespace para Teste
@@ -35,10 +35,10 @@
     set_fact:
       vm_name: "{{ vm_name | default([]) + ['vm-teste-' ~ item] }}"
       mac_address: "{{ mac_address | default([]) + ['52:54:00' | community.general.random_mac] }}"
-    with_sequence: start=0 end={{ numero_de_vms - 1}}
+    with_sequence: start=0 end={{ numero_de_vms | int - 1}}
 
   - name: Cria vms de acordo com o numero  
     kubernetes.core.k8s:
      state: present
      template: 'vm-template.yaml.j2'
-    with_sequence: start=0 end={{ numero_de_vms -1 }}
+    with_sequence: start=0 end={{ numero_de_vms | int - 1 }}

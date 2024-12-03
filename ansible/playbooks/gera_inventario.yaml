@@ -1,6 +1,8 @@
 ---
 - name: Gerar inventory.ini com IPs das VMs usando k8s_info
   hosts: localhost
+  vars:
+    namespace: algumas-vms-para-estressar
   gather_facts: no
   tasks:
     - name: Obter lista de VirtualMachineInstances (VMIs)
