@@ -54,6 +54,10 @@ ansible-playbook -i inventario.ini stress_memoria.yaml
 ```
 ansible-playbook destroi_vms.yaml" 
 ```
+### Caso precise usar oc de dentro do pod
+```
+oc login --token $K8S_AUTH_API_KEY $K8S_AUTH_HOST
+```
 
 ## Geracao de Templates
 Pode ser necessario gerar template especifico para o uso. Logo, sugiro utilizar a propria interface do OpenShift para gerar o YAML padrao e copie para "templates/vm-template.yaml.j2". Apos a copia substituir alguns campos como macaddress, vm_name 
