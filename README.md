@@ -31,24 +31,28 @@ cd /ansible
 ```
 
 ## Uso
-Dentro do pod, pode editar os arquivos ou mudar as variaveis ao chamar o comando ansible-playbook.
+Dentro do pod, pode editar os arquivos ou mudar as variaveis ao chamar o comando ansible-playbook. Por padrao o namespace criado é algumas-vms-para-estressar.
 
 ### Criar VMs
 ```
-ansible-playbook -e "numero_de_vms=4" -e "namespace=abc123" -e "vm_password=Hs9Vkd9a" cria_vms.yaml
+ansible-playbook -e "numero_de_vms=4" -e "vm_password=Hs9Vkd9a" cria_vms.yaml
 ```
 
 ### Gera Inventario e Instala stress tool (pre-req para todos os comandos a seguir)
 ```
-ansible-playbook -e "namespace=abc123" gera_inventario.yaml
-ansible-playbook -i inventario.ini -e "namespace=abc123" instala_stress.yaml
+ansible-playbook gera_inventario.yaml
+ansible-playbook -i inventario.ini instala_stress.yaml
 ```
 
 ### Executa testes de Stress CPU e Memoria
 ```
-ansible-playbook -e "namespace=abc123" -i inventario.ini 
-ansible-playbook -i inventario.ini -e "namespace=abc123" stress_cpu.yaml
-ansible-playbook -i inventario.ini -e "namespace=abc123" stress_memoria.yaml
+ansible-playbook -i inventario.ini stress_cpu.yaml
+ansible-playbook -i inventario.ini stress_memoria.yaml
+```
+
+### Destruir VMs
+```
+ansible-playbook destroi_vms.yaml" 
 ```
 
 ### (Opcional) Criar sua propria chave ssh
@@ -57,11 +61,4 @@ De dentro do diretorio /ansible/playbooks gere o seguinte comando
 ```
 ssh-keygen -t rsa -b 4096 -f /ansible/playbooks/files/id_rsa
 ```
-
-
-### Destruir VMs
-```
-ansible-playbook -e "namespace=abc123 destroi_vms.yaml" 
-```
-
 
