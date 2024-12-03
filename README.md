@@ -55,6 +55,12 @@ ansible-playbook -i inventario.ini stress_memoria.yaml
 ansible-playbook destroi_vms.yaml" 
 ```
 
+## Geracao de Templates
+Pode ser necessario gerar template especifico para o uso. Logo, sugiro utilizar a propria interface do OpenShift para gerar o YAML padrao e copie para "templates/vm-template.yaml.j2". Apos a copia substituir alguns campos como macaddress, vm_name 
+
+<img width="1427" alt="image" src="https://github.com/user-attachments/assets/d04661a2-3bca-418b-86e4-d7e0aebe1a10">
+
+
 ### (Opcional) Criar sua propria chave ssh
 De dentro do diretorio /ansible/playbooks gere o seguinte comando
 
