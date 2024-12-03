@@ -11,3 +11,5 @@
       ansible.builtin.yum:
         name: /tmp/stress-1.0.4-29.el9.x86_64.rpm
         state: present
+        disable_gpg_check: true
+        use_backend: rpm
