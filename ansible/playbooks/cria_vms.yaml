@@ -3,7 +3,7 @@
   vars:
     numero_de_vms: 3
     namespace: algumas-vms-para-estressar
-    vm_password: abacaxi
+    vm_password: 9skH9sBldA
   tasks:
   - name: Cria Namespace para Teste
     kubernetes.core.k8s:

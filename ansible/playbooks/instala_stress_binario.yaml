@@ -1,0 +1,13 @@
+- name: Copia stress binario e instala
+  hosts: all
+  become: yes
+  tasks:
+    - name: Copia binario stress
+      copy:
+        src: stress-1.0.4-29.el9.x86_64.rpm
+        dest: /tmp/stress-1.0.4-29.el9.x86_64.rpm 
+
+    - name: Install Stress
+      ansible.builtin.yum:
+        name: /tmp/stress-1.0.4-29.el9.x86_64.rpm
+        state: present
