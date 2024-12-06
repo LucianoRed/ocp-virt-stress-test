@@ -5,3 +5,5 @@
     - name: Run CPU stress test
       ansible.builtin.command:
         cmd: "stress --cpu 4 --timeout 30s"
+      poll: 0
+      async: 3600
