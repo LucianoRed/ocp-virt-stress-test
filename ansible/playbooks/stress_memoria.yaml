@@ -1,7 +1,10 @@
 - name: Stress memory using stress
   hosts: all
   become: yes
+  gather_facts: no
   tasks:
     - name: Run memory stress test
       ansible.builtin.command:
         cmd: "stress --vm 2 --vm-bytes 1G --timeout 30s"
+      poll: 0
+      async: 3600
